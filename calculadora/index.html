@@ -1,34 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Calculadora</title>
+<style>
+body {
+    background-color: #ffffff;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+.calculator {
+    background-color: #800080;
+    padding: 20px;
+    border-radius: 5px;
+}
+button {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    font-size: 24px;
+    color: #FFFFFF;
+    background-color: #00008B;
+}
+#result {
+    width: 248px;
+    height: 60px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 27px;
+    color: #000000;
+    background-color: #ffffff;
+}
+</style>
 </head>
 <body>
-  <div class="calculator">
-    <input type="text" id="display" readonly>
-    <div class="keys">
-      <button onclick="appendToDisplay('7')">7</button>
-      <button onclick="appendToDisplay('8')">8</button>
-      <button onclick="appendToDisplay('9')">9</button>
-      <button class="operator" onclick="appendToDisplay('/')">/</button>
-      <button onclick="appendToDisplay('4')">4</button>
-      <button onclick="appendToDisplay('5')">5</button>
-      <button onclick="appendToDisplay('6')">6</button>
-      <button class="operator" onclick="appendToDisplay('*')">X</button>
-      <button onclick="appendToDisplay('1')">1</button>
-      <button onclick="appendToDisplay('2')">2</button>
-      <button onclick="appendToDisplay('3')">3</button>
-      <button class="operator" onclick="appendToDisplay('-')">-</button>
-      <button onclick="appendToDisplay('0')">0</button>
-      <button onclick="appendToDisplay('.')">.</button>
-      <button class="operator" onclick="calculate()">=</button>
-      <button class="operator" onclick="appendToDisplay('+')">+</button>
-    </div>
-     <button class="clear" onclick="clearDisplay()">C</button>
-  </div>
-  <script src="script.js"></script>
+<div class="container">
+<div class="calculator">
+<input id="result" type="text" readonly />
+<br/>
+<button onclick="appendNumber('7')">7</button>
+<button onclick="appendNumber('8')">8</button>
+<button onclick="appendNumber('9')">9</button>
+<button onclick="calculate('/')">/</button>
+<br/>
+<button onclick="appendNumber('4')">4</button>
+<button onclick="appendNumber('5')">5</button>
+<button onclick="appendNumber('6')">6</button>
+<button onclick="calculate('*')">*</button>
+<br/>
+<button onclick="appendNumber('1')">1</button>
+<button onclick="appendNumber('2')">2</button>
+<button onclick="appendNumber('3')">3</button>
+<button onclick="calculate('-')">-</button>
+<br/>
+<button onclick="appendNumber('0')">0</button>
+<button onclick="calculate('.')">.</button>
+<button onclick="equal()">=</button>
+<button onclick="calculate('+')">+</button>
+<br/>
+<button onclick="clearAll()">C</button>
+</div>
+</div>
+
+<script type="text/javascript">
+let operator = '';
+let operand1 = '';
+let operand2 = '';
+
+function appendNumber(number) {
+    if (operator === '') {
+        operand1 += number;
+        document.getElementById("result").value = operand1;
+    } else {
+        operand2 += number;
+        document.getElementById("result").value = operand2;
+    }
+}
+
+function calculate(op) {
+    if (operator === '' && operand1 !== '') {
+        operator = op;
+        document.getElementById("result").value = operator;
+    }
+}
+
+function equal() {
+    if (operator !== '' && operand2 !== '') {
+        let result = eval(operand1 + operator + operand2);
+        document.getElementById("result").value = result;
+
+        operator = '';
+        operand1 = result.toString();
+        operand2 = '';
+    }
+}
+
+function clearAll() {
+    operator = '';
+    operand1 = '';
+    operand2 = '';
+    
+    document.getElementById("result").value = '';
+}
+</script>
+
 </body>
 </html>
